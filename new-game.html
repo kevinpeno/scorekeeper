@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RL Scorekeeper</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      label, input {
+        display: block;
+        margin: 2ex 1em;
+      }
+      input {
+        display: block;
+        margin: 2ex 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">Go back</a>
+    <h1>New Game</h1>
+    <form action="games/0000001/" method="GET">
+      <fieldset>
+        <legend>Blue Team</legend>
+        <label>
+          Name
+          <input type="text" name="blue-team"/>
+        </label>
+        <fieldset>
+          <legend>Roster</legend>
+          <label>
+            Player Name
+            <input type="text" name="blue-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="blue-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="blue-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="blue-player"/>
+          </label>
+        </fieldset>
+      </fieldset>
+      <fieldset>
+        <legend>Orange Team</legend>
+        <label>
+          Name
+          <input type="text" name="orange-team"/>
+        </label>
+        <fieldset>
+          <legend>Roster</legend>
+          <label>
+            Player Name
+            <input type="text" name="orange-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="orange-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="orange-player"/>
+          </label>
+          <label>
+            Player Name
+            <input type="text" name="orange-player"/>
+          </label>
+        </fieldset>
+      </fieldset>
+      <fieldset>
+        <button>Start Game</button>
+      </fieldset>
+    </form>
+  </body>
+</html>
