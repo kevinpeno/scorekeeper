@@ -73,8 +73,14 @@
         </fieldset>
       </fieldset>
       <fieldset>
+        <input type="hidden" id="numlock-on" name="numlock-on" value="0"/>
         <button>Start Game</button>
       </fieldset>
     </form>
+    <script>
+      window.addEventListener("keydown", (e) => {
+        window['numlock-on'].value = e.getModifierState("NumLock") ? 1 : 0
+      })
+    </script>
   </body>
 </html>

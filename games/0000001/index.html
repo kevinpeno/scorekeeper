@@ -10,26 +10,26 @@
 </head>
 <body>
   <h1>Game log</h1>
-  <form method="GET">
+  <form id="logger" method="GET">
     <fieldset>
       <legend>Game Clock</legend>
       <output id="clock" for="clock-run"></output>
     </fieldset>
     <fieldset>
       <legend>Log triggers</legend>
-      <button id="1" disabled>1</button>
-      <button id="2" disabled>2</button>
-      <button id="3" disabled>3</button>
-      <button id="4" disabled>4</button>
-      <button id="5" disabled>5</button>
-      <button id="6" disabled>6</button>
-      <button id="7" disabled>7</button>
-      <button id="8" disabled>8</button>
-      <button id="9" disabled>9</button>
+      <button id="action-1">1</button>
+      <button id="action-2">2</button>
+      <button id="action-3">3</button>
+      <button id="action-4">4</button>
+      <button id="action-5">5</button>
+      <button id="action-6">6</button>
+      <button id="action-7">7</button>
+      <button id="action-8">8</button>
+      <button id="action-9">9</button>
     </fieldset>
     <fieldset>
       <legend>Special triggers</legend>
-      <button type="button" id="clock-run" onclick="triggerClock()">Start/Stop Clock</button>
+      <button id="clock-run">Start/Stop Clock</button>
     </fieldset>
   </form>
   <details open>
@@ -39,7 +39,7 @@
   <script>
     const createTeam = (name, players) => ({ name, players })
     const createClock = () => {
-      const matchTimer = 10000 // 5 minutes
+      const matchTimer = 5 * 60 * 1000
       let msTicks = 0
       let prevTime = null
       let interval = null
@@ -106,10 +106,10 @@
     function triggerClock() {
       if(clockManager.isRunning) {
         clockManager.stop()
-        log('clock stopped')
+        log("clock stopped")
       } else {
         clockManager.start()
-        log('clock started')
+        log("clock started")
       }
     }
     function updateClock() {
@@ -117,25 +117,60 @@
       window.requestAnimationFrame(updateClock)
     }
     updateClock()
+    window['clock-run'].addEventListener("click", triggerClock)
 
     const log = (...notes) => {
       notes.forEach((note) => {
-        const logEl = document.createElement('li')
+        const logEl = document.createElement("li")
         logEl.append(`[${clockManager.remainingFormatted}]: ${note}`)
         window['play-log'].prepend(logEl)
       })
     }
-
+  </script>
+  <script>
     // Add the teams
     const teams = {
       blue: createTeam(input.get("blue-team"), input.getAll("blue-player")),
       orange: createTeam(input.get("orange-team"), input.getAll("orange-player")),
     }
     log(
-      `${teams.blue.name} joined the match with: ${teams.blue.players.join(', ')}`,
-      `${teams.orange.name} joined the match with: ${teams.orange.players.join(', ')}`
+      `${teams.blue.name} joined the match with: ${teams.blue.players.join(", ")}`,
+      `${teams.orange.name} joined the match with: ${teams.orange.players.join(", ")}`
     )
-
+  </script>
+  <script>
+    // Setup form
+    window.logger.addEventListener("submit", (e) => e.preventDefault())
+    window.addEventListener("keydown", (e) => {
+      // number based 10-key input
+      if(e.getModifierState("NumLock") && e.location === 3) {
+        switch(e.key) {
+          case "0":
+            return window['clock-run'].click()
+            break;
+          case "1":
+          case "2":
+          case "3":
+          case "4":
+          case "5":
+          case "6":
+          case "7":
+          case "8":
+          case "9":
+            return window[`action-${e.key}`] && window[`action-${e.key}`].click()
+            break;
+        }
+      }
+    })
+  </script>
+  <script>
+    // click listeners
+    for(let i = 1; i < 10; i++) {
+      console.log(`registering click for #action-${i}`)
+      window[`action-${i.toString()}`].addEventListener("click", (e) =>
+        log(`action-${i.toString()}`)
+      )
+    }
   </script>
 </body>
 </html>
